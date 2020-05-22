@@ -11,7 +11,7 @@ buildscript {
 apply plugin: 'kotlin'
 apply plugin: 'application'
 
-group 'dev.remylavergne.halo-companion'
+group 'dev.remylavergne.halo'
 version '0.0.1'
 mainClassName = "io.ktor.server.netty.EngineMain"
 
@@ -32,4 +32,7 @@ dependencies {
     implementation "io.ktor:ktor-server-netty:$ktor_version"
     implementation "ch.qos.logback:logback-classic:$logback_version"
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
+    
+    // MongoDB
+    compile 'org.litote.kmongo:kmongo:3.11.2'
 }
