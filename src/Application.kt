@@ -3,6 +3,7 @@ package dev.remylavergne.halo
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.request.*
+import io.ktor.routing.Routing
 import io.ktor.routing.get
 import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
@@ -16,9 +17,19 @@ fun main(args: Array<String>) {
 @Suppress("unused") // Referenced in application.conf
 fun Application.mainModule() {
     routing {
-        get("/") {
-            this.call.respond("Hello World!")
-        }
+       root()
+    }
+}
+
+fun Routing.root() {
+    get("/") {
+        this.call.respond("Hello World!")
+    }
+}
+
+fun Routing.player() {
+    get("/player/{id}") {
+
     }
 }
 
