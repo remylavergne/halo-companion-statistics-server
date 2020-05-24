@@ -1,29 +1,39 @@
 package dev.remylavergne.halo.repository
 
-import org.litote.kmongo.*
+import com.mongodb.MongoClient
+import com.mongodb.MongoClientURI
+import com.mongodb.client.MongoDatabase
+import io.ktor.application.Application
+import io.ktor.util.KtorExperimentalAPI
+import org.litote.kmongo.KMongo
 
-object Database {
+@KtorExperimentalAPI
+class DatabaseHelper(private val application: Application) {
 
-   /* private lateinit var client: MongoClient
+    private lateinit var client: MongoClient
     private lateinit var database: MongoDatabase
-    private lateinit var collection: MongoCollection<Email>
-    private lateinit var smtpDetailsCollection: MongoCollection<SmtpDetails>
-
-    private val uri =
-        MongoClientURI("mongodb://${EnvironmentVariables.mongoUsername}:${EnvironmentVariables.mongoPassword}@${EnvironmentVariables.mongoHostname}:${EnvironmentVariables.mongoPort}")
 
     @Throws(Exception::class)
-    fun initialization() {
+    fun initialize(): DatabaseHelper {
+        val uri =
+            MongoClientURI(
+                "mongodb://${application.environment.config.property("mongodb.username")
+                    .getString()}:${application.environment.config.property(
+                    "mongodb.password"
+                ).getString()}@${application.environment.config.property("mongodb.hostname")
+                    .getString()}:${application.environment.config.property(
+                    "mongodb.port"
+                ).getString()}"
+            )
+
         try {
             client = KMongo.createClient(uri = uri)
-            database = client.getDatabase(DATABASE_NAME)
-            collection = database.getCollection<Email>()
-            smtpDetailsCollection = database.getCollection<SmtpDetails>()
+            database = client.getDatabase(application.environment.config.property("mongodb.name").getString())
         } catch (e: Exception) {
             throw e
         }
-    }
 
-    */
+        return this
+    }
 
 }
