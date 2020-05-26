@@ -1,14 +1,14 @@
-package dev.remylavergne.halo.data.models.profile
+package dev.remylavergne.halo.data.dto.profile
 
 import com.google.gson.annotations.SerializedName
 
-data class Profile(
+data class ProfileDto(
     @SerializedName("Gamertag")
     val gamertag: String,
     @SerializedName("LastModifiedUtc")
-    val lastModifiedUtc: ModifiedUtc,
+    val lastModifiedUtc: ModifiedUtcDto,
     @SerializedName("FirstModifiedUtc")
-    val firstModifiedUtc: ModifiedUtc,
+    val firstModifiedUtc: ModifiedUtcDto,
     @SerializedName("ServiceTag")
     val serviceTag: String,
     @SerializedName("Company")
@@ -16,4 +16,4 @@ data class Profile(
 
 )
 
-data class ModifiedUtc(val ISO8601Date: String)
+data class ModifiedUtcDto(val ISO8601Date: String)

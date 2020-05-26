@@ -1,6 +1,6 @@
 package dev.remylavergne.halo.services
 
-import dev.remylavergne.halo.data.models.profile.Profile
+import dev.remylavergne.halo.data.dto.profile.ProfileDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -10,6 +10,6 @@ import retrofit2.http.Path
 interface ProfileService {
 
     @GET("profile/h5/profiles/{player}/appearance")
-    suspend fun getAppearance(@Path("player") player: String): Profile
+    suspend fun getAppearance(@Path("player") player: String): ProfileDto
 
 }
