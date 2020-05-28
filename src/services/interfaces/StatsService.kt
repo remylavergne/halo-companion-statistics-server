@@ -1,4 +1,4 @@
-package dev.remylavergne.halo.services
+package dev.remylavergne.halo.services.interfaces
 
 /**
  * API that provides statistical data about Players and Matches.

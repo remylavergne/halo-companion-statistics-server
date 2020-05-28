@@ -6,18 +6,16 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
-object RetrofitHelper {
+object OkHttpHelper {
 
     private lateinit var application: Application
 
     private val logging = HttpLoggingInterceptor().apply {
         setLevel(HttpLoggingInterceptor.Level.BODY)
     }
-    private val client = OkHttpClient.Builder()
+    val client = OkHttpClient.Builder()
         .addInterceptor(logging)
         .addInterceptor(object : Interceptor {
             override fun intercept(chain: Interceptor.Chain): Response {
@@ -31,22 +29,7 @@ object RetrofitHelper {
         })
         .build()
 
-    private val retrofitInstance: Retrofit = Retrofit.Builder()
-        .baseUrl("https://www.haloapi.com/")
-        .client(client)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-
     fun init(application: Application) {
         this.application = application
     }
-
-    fun getMetadataService(): MetadataService = this.retrofitInstance.create(MetadataService::class.java)
-
-    fun getProfileService(): ProfileService = this.retrofitInstance.create(ProfileService::class.java)
-
-    fun getStatsService(): StatsService = this.retrofitInstance.create(StatsService::class.java)
-
-    fun getUgcService(): UgcService = this.retrofitInstance.create(UgcService::class.java)
-
 }

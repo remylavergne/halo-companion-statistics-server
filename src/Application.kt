@@ -1,7 +1,9 @@
 package dev.remylavergne.halo
 
 import dev.remylavergne.halo.repository.DatabaseHelper
-import dev.remylavergne.halo.services.RetrofitHelper
+import dev.remylavergne.halo.services.OkHttpHelper
+import dev.remylavergne.halo.services.ProfileServiceImpl
+import dev.remylavergne.halo.services.interfaces.ProfileService
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
@@ -16,6 +18,7 @@ import io.ktor.response.respondText
 import io.ktor.routing.Routing
 import io.ktor.routing.get
 import io.ktor.routing.routing
+import okhttp3.OkHttpClient
 
 /*fun main(args: Array<String>) {
     // TODO => Récupérer le port via la config HOCON
@@ -28,7 +31,7 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 fun Application.mainModule() {
     installPlugins(this)
     DatabaseHelper(this).initialize()
-    RetrofitHelper.init(this)
+    OkHttpHelper.init(this)
     routing {
         root()
     }
@@ -53,8 +56,13 @@ fun installPlugins(application: Application) {
 
 fun Routing.root() {
     get("/") {
-        val appearance = RetrofitHelper.getProfileService().getAppearance("fakerunner")
-        this.call.respond(appearance.toString())
+        try {
+            val appearance = ProfileServiceImpl(OkHttpHelper.client).getAppearance("fakerunner")
+            println(appearance)
+            this.call.respond(appearance.toString())
+        } catch (e: Exception) {
+            println(e)
+        }
     }
 
     get("/health_check") {

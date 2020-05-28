@@ -1,17 +1,19 @@
 package dev.remylavergne.halo.data.dto.profile
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class ProfileDto(
-    @SerializedName("Gamertag")
+    @Json(name = "Gamertag")
     val gamertag: String,
-    @SerializedName("LastModifiedUtc")
+    @Json(name = "LastModifiedUtc")
     val lastModifiedUtc: ModifiedUtcDto,
-    @SerializedName("FirstModifiedUtc")
+    @Json(name = "FirstModifiedUtc")
     val firstModifiedUtc: ModifiedUtcDto,
-    @SerializedName("ServiceTag")
+    @Json(name = "ServiceTag")
     val serviceTag: String,
-    @SerializedName("Company")
+    @Json(name = "Company")
     val company: String?
 
 )
