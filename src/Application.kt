@@ -1,5 +1,7 @@
 package dev.remylavergne.halo
 
+import dev.remylavergne.halo.data.dto.profile.ProfileCrop
+import dev.remylavergne.halo.data.dto.profile.ProfileImageSize
 import dev.remylavergne.halo.repository.DatabaseHelper
 import dev.remylavergne.halo.services.OkHttpHelper
 import dev.remylavergne.halo.services.ProfileServiceImpl
@@ -55,7 +57,13 @@ fun installPlugins(application: Application) {
 fun Routing.root() {
     get("/") {
         // TEST => Diplay user profile
-        val appearance = ProfileServiceImpl(OkHttpHelper.client).getAppearance("fakerunner")
+        /*val appearance = ProfileServiceImpl(OkHttpHelper.client).getAppearance("fakerunner")*/
+        /*val appearance = ProfileServiceImpl(OkHttpHelper.client).getEmblem(player = "fakerunner", size = "128")*/
+        val appearance = ProfileServiceImpl(OkHttpHelper.client).getSpartanImage(
+            player = "fakerunner",
+            size = ProfileImageSize.M,
+            crop = ProfileCrop.FULL
+        )
         this.call.respond(appearance.toString())
     }
 
