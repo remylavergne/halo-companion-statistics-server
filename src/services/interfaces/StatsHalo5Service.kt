@@ -1,5 +1,6 @@
 package dev.remylavergne.halo.services.interfaces
 
+import dev.remylavergne.halo.data.dto.halo5.CompanyCommendationsDto
 import dev.remylavergne.halo.data.dto.halo5.CompanyDto
 
 /**
@@ -8,4 +9,6 @@ import dev.remylavergne.halo.data.dto.halo5.CompanyDto
 interface StatsHalo5Service {
 
     suspend fun getCompany(id: String): CompanyDto?
+
+    suspend fun getCompanyCommendations(companyId: String): CompanyCommendationsDto?
 }

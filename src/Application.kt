@@ -65,7 +65,7 @@ fun Routing.root() {
             size = ProfileImageSize.M,
             crop = ProfileCrop.FULL
         )*/
-        val result = StatsHalo5ServiceImpl(OkHttpHelper.client).getCompany("aa481541-da04-4590-8b89-e15d8505955b")
+        val result = StatsHalo5ServiceImpl(OkHttpHelper.client).getCompanyCommendations("aa481541-da04-4590-8b89-e15d8505955b")
         this.call.respond(result.toString())
     }
 

@@ -1,5 +1,6 @@
 package dev.remylavergne.halo.services
 
+import dev.remylavergne.halo.data.dto.halo5.CompanyCommendationsDto
 import dev.remylavergne.halo.data.dto.halo5.CompanyDto
 import dev.remylavergne.halo.services.interfaces.StatsHalo5Service
 import kotlinx.coroutines.Dispatchers
@@ -26,6 +27,23 @@ class StatsHalo5ServiceImpl(private val okHttpClient: OkHttpClient) : StatsHalo5
             println(error)
             null
         }
+    }
 
+    override suspend fun getCompanyCommendations(companyId: String): CompanyCommendationsDto? {
+        val request: Request =
+            Request.Builder().url("https://www.haloapi.com/stats/h5/companies/$companyId/commendations").build()
+
+        return try {
+            withContext(Dispatchers.IO) {
+                val response: Response = okHttpClient.newCall(request).execute()
+                val adapter = MoshiHelper.getAdapter(CompanyCommendationsDto::class.java)
+                response.body?.string()?.let { json: String ->
+                    return@withContext adapter.fromJson(json)
+                }
+            }
+        } catch (error: Throwable) {
+            println(error)
+            null
+        }
     }
 }
