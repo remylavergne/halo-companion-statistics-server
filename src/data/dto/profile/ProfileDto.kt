@@ -8,9 +8,9 @@ data class ProfileDto(
     @Json(name = "Gamertag")
     val gamertag: String,
     @Json(name = "LastModifiedUtc")
-    val lastModifiedUtc: ModifiedUtcDto,
+    val lastModifiedUtc: DateUtcDto,
     @Json(name = "FirstModifiedUtc")
-    val firstModifiedUtc: ModifiedUtcDto,
+    val firstModifiedUtc: DateUtcDto,
     @Json(name = "ServiceTag")
     val serviceTag: String,
     @Json(name = "Company")
@@ -18,4 +18,4 @@ data class ProfileDto(
 
 )
 
-data class ModifiedUtcDto(val ISO8601Date: String)
+data class DateUtcDto(val ISO8601Date: String)

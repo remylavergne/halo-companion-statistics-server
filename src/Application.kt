@@ -5,6 +5,7 @@ import dev.remylavergne.halo.data.dto.profile.ProfileImageSize
 import dev.remylavergne.halo.repository.DatabaseHelper
 import dev.remylavergne.halo.services.OkHttpHelper
 import dev.remylavergne.halo.services.ProfileServiceImpl
+import dev.remylavergne.halo.services.StatsHalo5ServiceImpl
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
@@ -59,12 +60,13 @@ fun Routing.root() {
         // TEST => Diplay user profile
         /*val appearance = ProfileServiceImpl(OkHttpHelper.client).getAppearance("fakerunner")*/
         /*val appearance = ProfileServiceImpl(OkHttpHelper.client).getEmblem(player = "fakerunner", size = "128")*/
-        val appearance = ProfileServiceImpl(OkHttpHelper.client).getSpartanImage(
+        /*val appearance = ProfileServiceImpl(OkHttpHelper.client).getSpartanImage(
             player = "fakerunner",
             size = ProfileImageSize.M,
             crop = ProfileCrop.FULL
-        )
-        this.call.respond(appearance.toString())
+        )*/
+        val result = StatsHalo5ServiceImpl(OkHttpHelper.client).getCompany("aa481541-da04-4590-8b89-e15d8505955b")
+        this.call.respond(result.toString())
     }
 
 
