@@ -55,7 +55,7 @@ fun installPlugins(application: Application) {
 
 fun Routing.root() {
     get("/") {
-        val result = MetadataServiceImpl(OkHttpHelper.client).getEnemies(Language.FRENCH)
+        val result = MetadataServiceImpl(OkHttpHelper.client).getFlexibleStats(Language.FRENCH)
         this.call.respond(result.toString())
     }
 

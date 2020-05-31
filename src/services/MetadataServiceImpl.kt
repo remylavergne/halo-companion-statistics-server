@@ -3,6 +3,7 @@ package dev.remylavergne.halo.services
 import dev.remylavergne.halo.data.dto.halo5.CommendationsDto
 import dev.remylavergne.halo.data.dto.halo5.CsrDesignationsDto
 import dev.remylavergne.halo.data.dto.halo5.EnemiesDto
+import dev.remylavergne.halo.data.dto.halo5.FlexibleStatsDto
 import dev.remylavergne.halo.data.dto.metadata.CampaignMissionsDto
 import dev.remylavergne.halo.data.enums.Language
 import dev.remylavergne.halo.services.interfaces.MetadataService
@@ -13,6 +14,7 @@ import okhttp3.Request
 import okhttp3.Response
 
 // TODO => Save all these informations into our database
+// TODO => Refactor avec une méthode générique.
 class MetadataServiceImpl(private val okHttpClient: OkHttpClient) : MetadataService {
 
     override suspend fun getCampaignMissions(language: Language): List<CampaignMissionsDto> {
@@ -108,5 +110,24 @@ class MetadataServiceImpl(private val okHttpClient: OkHttpClient) : MetadataServ
             println(error)
             emptyList<EnemiesDto>()
         } ?: emptyList<EnemiesDto>()
+    }
+
+    override suspend fun getFlexibleStats(language: Language): List<FlexibleStatsDto> {
+        val request: Request =
+            Request.Builder().url("https://www.haloapi.com/metadata/h5/metadata/flexible-stats")
+                .header("Accept-Language", language.value).build()
+
+        return try {
+            withContext(Dispatchers.IO) {
+                val response: Response = okHttpClient.newCall(request).execute()
+                val listAdapter = MoshiHelper.getListAdapter(FlexibleStatsDto::class.java)
+                response.body?.string()?.let {
+                    return@withContext listAdapter.fromJson(it)
+                }
+            }
+        } catch (error: Throwable) {
+            println(error)
+            emptyList<FlexibleStatsDto>()
+        } ?: emptyList<FlexibleStatsDto>()
     }
 }
