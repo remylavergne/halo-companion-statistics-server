@@ -1,6 +1,7 @@
-package dev.remylavergne.halo.data.dto.halo5
+package dev.remylavergne.halo.data.dto.metadata
 
 import com.squareup.moshi.JsonClass
+import dev.remylavergne.halo.data.dto.metadata.Reward
 
 @JsonClass(generateAdapter = true)
 data class SpartanRankDto(

@@ -1,7 +1,6 @@
 package dev.remylavergne.halo.services.interfaces
 
-import dev.remylavergne.halo.data.dto.halo5.*
-import dev.remylavergne.halo.data.dto.metadata.CampaignMissionsDto
+import dev.remylavergne.halo.data.dto.metadata.*
 import dev.remylavergne.halo.data.enums.Language
 
 /** API that provides Metadata information. */

@@ -1,4 +1,4 @@
-package dev.remylavergne.halo.data.dto.halo5
+package dev.remylavergne.halo.data.dto.metadata
 
 data class ImpulseDto(
     // Internal use. The non-localized name of the impulse.
