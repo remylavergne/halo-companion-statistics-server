@@ -1,6 +1,8 @@
 package dev.remylavergne.halo.services
 
 import dev.remylavergne.halo.data.dto.halo5.CommendationsDto
+import dev.remylavergne.halo.data.dto.halo5.CsrDesignationsDto
+import dev.remylavergne.halo.data.dto.halo5.EnemiesDto
 import dev.remylavergne.halo.data.dto.metadata.CampaignMissionsDto
 import dev.remylavergne.halo.data.enums.Language
 import dev.remylavergne.halo.services.interfaces.MetadataService
@@ -68,5 +70,43 @@ class MetadataServiceImpl(private val okHttpClient: OkHttpClient) : MetadataServ
             println(error)
             emptyList<CommendationsDto>()
         } ?: emptyList<CommendationsDto>()
+    }
+
+    override suspend fun getCsrDesignations(language: Language): List<CsrDesignationsDto> {
+        val request: Request =
+            Request.Builder().url("https://www.haloapi.com/metadata/h5/metadata/csr-designations")
+                .header("Accept-Language", language.value).build()
+
+        return try {
+            withContext(Dispatchers.IO) {
+                val response: Response = okHttpClient.newCall(request).execute()
+                val listAdapter = MoshiHelper.getListAdapter(CsrDesignationsDto::class.java)
+                response.body?.string()?.let {
+                    return@withContext listAdapter.fromJson(it)
+                }
+            }
+        } catch (error: Throwable) {
+            println(error)
+            emptyList<CsrDesignationsDto>()
+        } ?: emptyList<CsrDesignationsDto>()
+    }
+
+    override suspend fun getEnemies(language: Language): List<EnemiesDto> {
+        val request: Request =
+            Request.Builder().url("https://www.haloapi.com/metadata/h5/metadata/enemies")
+                .header("Accept-Language", language.value).build()
+
+        return try {
+            withContext(Dispatchers.IO) {
+                val response: Response = okHttpClient.newCall(request).execute()
+                val listAdapter = MoshiHelper.getListAdapter(EnemiesDto::class.java)
+                response.body?.string()?.let {
+                    return@withContext listAdapter.fromJson(it)
+                }
+            }
+        } catch (error: Throwable) {
+            println(error)
+            emptyList<EnemiesDto>()
+        } ?: emptyList<EnemiesDto>()
     }
 }
