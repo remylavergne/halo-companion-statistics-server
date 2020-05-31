@@ -10,4 +10,6 @@ interface MetadataService {
     suspend fun getCampaignMissions(language: Language): List<CampaignMissionsDto>
 
     suspend fun getCommendations(language: Language): List<CommendationsDto>
+
+    suspend fun getCompanyCommendations(language: Language): List<CommendationsDto>
 }

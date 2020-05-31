@@ -58,7 +58,7 @@ data class RequiredLevel(
 
 data class CommendationsCategory(
     val name: String,
-    val iconImageUrl: String,
+    val iconImageUrl: String?,
     val order: Int,
     val id: String,
     val contentId: String

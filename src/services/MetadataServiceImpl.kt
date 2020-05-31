@@ -50,4 +50,23 @@ class MetadataServiceImpl(private val okHttpClient: OkHttpClient) : MetadataServ
             emptyList<CommendationsDto>()
         } ?: emptyList<CommendationsDto>()
     }
+
+    override suspend fun getCompanyCommendations(language: Language): List<CommendationsDto> {
+        val request: Request =
+            Request.Builder().url("https://www.haloapi.com/metadata/h5/metadata/company-commendations")
+                .header("Accept-Language", language.value).build()
+
+        return try {
+            withContext(Dispatchers.IO) {
+                val response: Response = okHttpClient.newCall(request).execute()
+                val listAdapter = MoshiHelper.getListAdapter(CommendationsDto::class.java)
+                response.body?.string()?.let {
+                    return@withContext listAdapter.fromJson(it)
+                }
+            }
+        } catch (error: Throwable) {
+            println(error)
+            emptyList<CommendationsDto>()
+        } ?: emptyList<CommendationsDto>()
+    }
 }

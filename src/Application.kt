@@ -55,7 +55,7 @@ fun installPlugins(application: Application) {
 
 fun Routing.root() {
     get("/") {
-        val result = MetadataServiceImpl(OkHttpHelper.client).getCommendations(Language.FRENCH)
+        val result = MetadataServiceImpl(OkHttpHelper.client).getCompanyCommendations(Language.FRENCH)
         this.call.respond(result.toString())
     }
 
