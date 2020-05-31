@@ -1,9 +1,6 @@
 package dev.remylavergne.halo.services
 
-import dev.remylavergne.halo.data.dto.halo5.CommendationsDto
-import dev.remylavergne.halo.data.dto.halo5.CsrDesignationsDto
-import dev.remylavergne.halo.data.dto.halo5.EnemiesDto
-import dev.remylavergne.halo.data.dto.halo5.FlexibleStatsDto
+import dev.remylavergne.halo.data.dto.halo5.*
 import dev.remylavergne.halo.data.dto.metadata.CampaignMissionsDto
 import dev.remylavergne.halo.data.enums.Language
 import dev.remylavergne.halo.services.interfaces.MetadataService
@@ -129,5 +126,43 @@ class MetadataServiceImpl(private val okHttpClient: OkHttpClient) : MetadataServ
             println(error)
             emptyList<FlexibleStatsDto>()
         } ?: emptyList<FlexibleStatsDto>()
+    }
+
+    override suspend fun getGameBaseVariants(language: Language): List<GameBaseVariantsDto> {
+        val request: Request =
+            Request.Builder().url("https://www.haloapi.com/metadata/h5/metadata/game-base-variants")
+                .header("Accept-Language", language.value).build()
+
+        return try {
+            withContext(Dispatchers.IO) {
+                val response: Response = okHttpClient.newCall(request).execute()
+                val listAdapter = MoshiHelper.getListAdapter(GameBaseVariantsDto::class.java)
+                response.body?.string()?.let {
+                    return@withContext listAdapter.fromJson(it)
+                }
+            }
+        } catch (error: Throwable) {
+            println(error)
+            emptyList<GameBaseVariantsDto>()
+        } ?: emptyList<GameBaseVariantsDto>()
+    }
+
+    override suspend fun getGameVariant(id: String, language: Language): GameVariantsDto? {
+        val request: Request =
+            Request.Builder().url("https://www.haloapi.com/metadata/h5/metadata/game-variants/$id")
+                .header("Accept-Language", language.value).build()
+
+        return try {
+            withContext(Dispatchers.IO) {
+                val response: Response = okHttpClient.newCall(request).execute()
+                val listAdapter = MoshiHelper.getAdapter(GameVariantsDto::class.java)
+                response.body?.string()?.let {
+                    return@withContext listAdapter.fromJson(it)
+                }
+            }
+        } catch (error: Throwable) {
+            println(error)
+            null
+        }
     }
 }
