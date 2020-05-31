@@ -25,12 +25,12 @@ data class CommendationsLevelsDto(
 
 data class Reward(
     val xp: Int,
-    val requisitionPacks: List<RequisitionPacks>,
+    val requisitionPacks: List<RequisitionPacksDto>,
     val id: String,
     val contentId: String
 )
 
-data class RequisitionPacks(
+data class RequisitionPacksDto(
     val name: String,
     val description: String,
     val largeImageUrlval: String?,

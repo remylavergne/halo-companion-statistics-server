@@ -49,13 +49,12 @@ fun installPlugins(application: Application) {
             // Configure Gson here
         }
     }
-    // Send automatically API KEY into header
     application.install(DefaultHeaders)
 }
 
 fun Routing.root() {
     get("/") {
-        val result = MetadataServiceImpl(OkHttpHelper.client).getImpulse(Language.FRENCH)
+        val result = MetadataServiceImpl(OkHttpHelper.client).getWeapons(Language.FRENCH)
         this.call.respond(result.toString())
     }
 
