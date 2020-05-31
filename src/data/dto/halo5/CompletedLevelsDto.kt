@@ -10,5 +10,4 @@ data class CompletedLevelsDto(
     val id: String,
     @Json(name = "CompletedDateUtc")
     val completedDateUtc: DateUtcDto
-) {
-}
+)
