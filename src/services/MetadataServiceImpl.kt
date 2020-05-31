@@ -15,22 +15,8 @@ import okhttp3.Response
 class MetadataServiceImpl(private val okHttpClient: OkHttpClient) : MetadataService {
 
     override suspend fun getCampaignMissions(language: Language): List<CampaignMissionsDto> {
-        val request: Request =
-            Request.Builder().url("https://www.haloapi.com/metadata/h5/metadata/campaign-missions")
-                .header("Accept-Language", language.value).build()
-
-        return try {
-            withContext(Dispatchers.IO) {
-                val response: Response = okHttpClient.newCall(request).execute()
-                val listAdapter = MoshiHelper.getListAdapter(CampaignMissionsDto::class.java)
-                response.body?.string()?.let {
-                    return@withContext listAdapter.fromJson(it)
-                }
-            }
-        } catch (error: Throwable) {
-            println(error)
-            emptyList<CampaignMissionsDto>()
-        } ?: emptyList<CampaignMissionsDto>()
+        val url = "https://www.haloapi.com/metadata/h5/metadata/campaign-missions"
+        return getList<CampaignMissionsDto>(url, language)
     }
 
     override suspend fun getCommendations(language: Language): List<CommendationsDto> {
@@ -262,22 +248,8 @@ class MetadataServiceImpl(private val okHttpClient: OkHttpClient) : MetadataServ
     }
 
     override suspend fun getRequisitions(id: String, language: Language): List<RequisitionDto> {
-        val request: Request =
-            Request.Builder().url("https://www.haloapi.com/metadata/h5/metadata/requisitions/$id")
-                .header("Accept-Language", language.value).build()
-
-        return try {
-            withContext(Dispatchers.IO) {
-                val response: Response = okHttpClient.newCall(request).execute()
-                val listAdapter = MoshiHelper.getListAdapter(RequisitionDto::class.java)
-                response.body?.string()?.let {
-                    return@withContext listAdapter.fromJson(it)
-                }
-            }
-        } catch (error: Throwable) {
-            println(error)
-            emptyList<RequisitionDto>()
-        } ?: emptyList<RequisitionDto>()
+        val url = "https://www.haloapi.com/metadata/h5/metadata/requisitions/$id"
+        return getList<RequisitionDto>(url, language)
     }
 
     override suspend fun getRequisitionPack(id: String, language: Language): RequisitionPacksDto? {
@@ -300,116 +272,57 @@ class MetadataServiceImpl(private val okHttpClient: OkHttpClient) : MetadataServ
     }
 
     override suspend fun getSeasons(language: Language): List<SeasonDto> {
-        val request: Request =
-            Request.Builder().url("https://www.haloapi.com/metadata/h5/metadata/seasons")
-                .header("Accept-Language", language.value).build()
-
-        return try {
-            withContext(Dispatchers.IO) {
-                val response: Response = okHttpClient.newCall(request).execute()
-                val listAdapter = MoshiHelper.getListAdapter(SeasonDto::class.java)
-                response.body?.string()?.let {
-                    return@withContext listAdapter.fromJson(it)
-                }
-            }
-        } catch (error: Throwable) {
-            println(error)
-            emptyList<SeasonDto>()
-        } ?: emptyList<SeasonDto>()
+        val url = "https://www.haloapi.com/metadata/h5/metadata/seasons"
+        return getList<SeasonDto>(url, language)
     }
 
     override suspend fun getSkulls(language: Language): List<SkullDto> {
-        val request: Request =
-            Request.Builder().url("https://www.haloapi.com/metadata/h5/metadata/skulls")
-                .header("Accept-Language", language.value).build()
-
-        return try {
-            withContext(Dispatchers.IO) {
-                val response: Response = okHttpClient.newCall(request).execute()
-                val listAdapter = MoshiHelper.getListAdapter(SkullDto::class.java)
-                response.body?.string()?.let {
-                    return@withContext listAdapter.fromJson(it)
-                }
-            }
-        } catch (error: Throwable) {
-            println(error)
-            emptyList<SkullDto>()
-        } ?: emptyList<SkullDto>()
+        val url = "https://www.haloapi.com/metadata/h5/metadata/skulls"
+        return getList<SkullDto>(url, language)
     }
 
     override suspend fun getSpartanRanks(language: Language): List<SpartanRankDto> {
-        val request: Request =
-            Request.Builder().url("https://www.haloapi.com/metadata/h5/metadata/spartan-ranks")
-                .header("Accept-Language", language.value).build()
-
-        return try {
-            withContext(Dispatchers.IO) {
-                val response: Response = okHttpClient.newCall(request).execute()
-                val listAdapter = MoshiHelper.getListAdapter(SpartanRankDto::class.java)
-                response.body?.string()?.let {
-                    return@withContext listAdapter.fromJson(it)
-                }
-            }
-        } catch (error: Throwable) {
-            println(error)
-            emptyList<SpartanRankDto>()
-        } ?: emptyList<SpartanRankDto>()
+        val url = "https://www.haloapi.com/metadata/h5/metadata/spartan-ranks"
+        return getList<SpartanRankDto>(url, language)
     }
 
     override suspend fun getTeamColors(language: Language): List<TeamColorDto> {
-        val request: Request =
-            Request.Builder().url("https://www.haloapi.com/metadata/h5/metadata/team-colors")
-                .header("Accept-Language", language.value).build()
-
-        return try {
-            withContext(Dispatchers.IO) {
-                val response: Response = okHttpClient.newCall(request).execute()
-                val listAdapter = MoshiHelper.getListAdapter(TeamColorDto::class.java)
-                response.body?.string()?.let {
-                    return@withContext listAdapter.fromJson(it)
-                }
-            }
-        } catch (error: Throwable) {
-            println(error)
-            emptyList<TeamColorDto>()
-        } ?: emptyList<TeamColorDto>()
+        val url = "https://www.haloapi.com/metadata/h5/metadata/team-colors"
+        return getList<TeamColorDto>(url, language)
     }
 
     override suspend fun getVehicules(language: Language): List<VehiculesDto> {
-        val request: Request =
-            Request.Builder().url("https://www.haloapi.com/metadata/h5/metadata/vehicles")
-                .header("Accept-Language", language.value).build()
-
-        return try {
-            withContext(Dispatchers.IO) {
-                val response: Response = okHttpClient.newCall(request).execute()
-                val listAdapter = MoshiHelper.getListAdapter(VehiculesDto::class.java)
-                response.body?.string()?.let {
-                    return@withContext listAdapter.fromJson(it)
-                }
-            }
-        } catch (error: Throwable) {
-            println(error)
-            emptyList<VehiculesDto>()
-        } ?: emptyList<VehiculesDto>()
+        val url = "https://www.haloapi.com/metadata/h5/metadata/vehicles"
+        return getList<VehiculesDto>(url, language)
     }
 
     override suspend fun getWeapons(language: Language): List<WeaponDto> {
+        val url = "https://www.haloapi.com/metadata/h5/metadata/weapons"
+        return getList<WeaponDto>(url = url, language = language)
+    }
+
+    private fun getObject(url: String, language: Language, id: String? = null) {
+
+    }
+
+    private suspend inline fun <reified T> getList(url: String, language: Language): List<T> {
         val request: Request =
-            Request.Builder().url("https://www.haloapi.com/metadata/h5/metadata/weapons")
-                .header("Accept-Language", language.value).build()
+            Request.Builder()
+                .url(url)
+                .header("Accept-Language", language.value)
+                .build()
 
         return try {
             withContext(Dispatchers.IO) {
                 val response: Response = okHttpClient.newCall(request).execute()
-                val listAdapter = MoshiHelper.getListAdapter(WeaponDto::class.java)
+                val listAdapter = MoshiHelper.getListAdapter(T::class.java)
                 response.body?.string()?.let {
                     return@withContext listAdapter.fromJson(it)
                 }
             }
         } catch (error: Throwable) {
             println(error)
-            emptyList<WeaponDto>()
-        } ?: emptyList<WeaponDto>()
+            emptyList<T>()
+        } ?: emptyList<T>()
     }
 }
