@@ -55,7 +55,7 @@ fun installPlugins(application: Application) {
 
 fun Routing.root() {
     get("/") {
-        val result = MetadataServiceImpl(OkHttpHelper.client).getGameVariant("1571fdac-e0b4-4ebc-a73a-6e13001b71d3", Language.FRENCH)
+        val result = MetadataServiceImpl(OkHttpHelper.client).getImpulse(Language.FRENCH)
         this.call.respond(result.toString())
     }
 

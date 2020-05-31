@@ -165,4 +165,23 @@ class MetadataServiceImpl(private val okHttpClient: OkHttpClient) : MetadataServ
             null
         }
     }
+
+    override suspend fun getImpulse(language: Language): List<ImpulseDto> {
+        val request: Request =
+            Request.Builder().url("https://www.haloapi.com/metadata/h5/metadata/game-base-variants")
+                .header("Accept-Language", language.value).build()
+
+        return try {
+            withContext(Dispatchers.IO) {
+                val response: Response = okHttpClient.newCall(request).execute()
+                val listAdapter = MoshiHelper.getListAdapter(ImpulseDto::class.java)
+                response.body?.string()?.let {
+                    return@withContext listAdapter.fromJson(it)
+                }
+            }
+        } catch (error: Throwable) {
+            println(error)
+            emptyList<ImpulseDto>()
+        } ?: emptyList<ImpulseDto>()
+    }
 }

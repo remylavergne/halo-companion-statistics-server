@@ -31,5 +31,11 @@ interface MetadataService {
     /** A list of game variants for the title. There is no significance to the ordering. */
     suspend fun getGameVariant(id: String, language: Language): GameVariantsDto?
 
+    /**
+     * A list of impulses (essentially invisible medals) for the title. There is no
+     * significance to the ordering.
+     */
+    suspend fun getImpulse(language: Language): List<ImpulseDto>
+
 
 }
