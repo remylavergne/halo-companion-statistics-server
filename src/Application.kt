@@ -1,11 +1,9 @@
 package dev.remylavergne.halo
 
-import dev.remylavergne.halo.data.dto.profile.ProfileCrop
-import dev.remylavergne.halo.data.dto.profile.ProfileImageSize
+import dev.remylavergne.halo.data.enums.Language
 import dev.remylavergne.halo.repository.DatabaseHelper
+import dev.remylavergne.halo.services.MetadataServiceImpl
 import dev.remylavergne.halo.services.OkHttpHelper
-import dev.remylavergne.halo.services.ProfileServiceImpl
-import dev.remylavergne.halo.services.StatsHalo5ServiceImpl
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
@@ -57,15 +55,7 @@ fun installPlugins(application: Application) {
 
 fun Routing.root() {
     get("/") {
-        // TEST => Diplay user profile
-        /*val appearance = ProfileServiceImpl(OkHttpHelper.client).getAppearance("fakerunner")*/
-        /*val appearance = ProfileServiceImpl(OkHttpHelper.client).getEmblem(player = "fakerunner", size = "128")*/
-        /*val appearance = ProfileServiceImpl(OkHttpHelper.client).getSpartanImage(
-            player = "fakerunner",
-            size = ProfileImageSize.M,
-            crop = ProfileCrop.FULL
-        )*/
-        val result = StatsHalo5ServiceImpl(OkHttpHelper.client).getCompanyCommendations("aa481541-da04-4590-8b89-e15d8505955b")
+        val result = MetadataServiceImpl(OkHttpHelper.client).getCommendations(Language.FRENCH)
         this.call.respond(result.toString())
     }
 

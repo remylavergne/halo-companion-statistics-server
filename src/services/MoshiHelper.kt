@@ -2,7 +2,9 @@ package dev.remylavergne.halo.services
 
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+
 
 object MoshiHelper {
 
@@ -10,4 +12,12 @@ object MoshiHelper {
         val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
         return moshi.adapter(jsonClass)
     }
+
+    fun <T> getListAdapter(jsonClass: Class<T>): JsonAdapter<List<T>> {
+        val type =
+            Types.newParameterizedType(List::class.java, jsonClass)
+        val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+        return moshi.adapter(type)
+    }
+
 }
