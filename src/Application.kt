@@ -18,15 +18,11 @@ import io.ktor.response.respondText
 import io.ktor.routing.Routing
 import io.ktor.routing.get
 import io.ktor.routing.routing
-
-/*fun main(args: Array<String>) {
-    // TODO => Récupérer le port via la config HOCON
-    embeddedServer(Netty, port = 8080, module = Application::mainModule).start(wait = true)
-}*/
+import io.ktor.util.KtorExperimentalAPI
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
-@Suppress("unused") // Referenced in application.conf
+@KtorExperimentalAPI
 fun Application.mainModule() {
     installPlugins(this)
     DatabaseHelper(this).initialize()
