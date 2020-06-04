@@ -1,11 +1,13 @@
-package dev.remylavergne.halo.data.dto.halo5
+package dev.remylavergne.halo.data.dto.halo5.generics
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import dev.remylavergne.halo.data.dto.halo5.MetaCommendationsDto
+import dev.remylavergne.halo.data.dto.halo5.ProgressiveCommendationsDto
 import dev.remylavergne.halo.data.dto.profile.DateUtcDto
 
 @JsonClass(generateAdapter = true)
-data class CompanyCommendationsDto(
+data class CommendationsDto(
    /* @Json(name = "Links")
     val links: String?,*/
     @Json(name = "ProgressiveCommendations")

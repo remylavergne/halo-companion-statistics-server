@@ -1,4 +1,4 @@
-package dev.remylavergne.halo.services
+package dev.remylavergne.halo.helpers
 
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi

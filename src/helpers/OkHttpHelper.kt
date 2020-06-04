@@ -1,4 +1,4 @@
-package dev.remylavergne.halo.services
+package dev.remylavergne.halo.helpers
 
 import io.ktor.application.Application
 import okhttp3.Interceptor
@@ -30,6 +30,6 @@ object OkHttpHelper {
         .build()
 
     fun init(application: Application) {
-        this.application = application
+        OkHttpHelper.application = application
     }
 }

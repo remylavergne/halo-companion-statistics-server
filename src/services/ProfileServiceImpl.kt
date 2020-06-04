@@ -3,6 +3,7 @@ package dev.remylavergne.halo.services
 import dev.remylavergne.halo.data.dto.profile.ProfileCrop
 import dev.remylavergne.halo.data.dto.profile.ProfileDto
 import dev.remylavergne.halo.data.dto.profile.ProfileImageSize
+import dev.remylavergne.halo.helpers.MoshiHelper
 import dev.remylavergne.halo.services.interfaces.ProfileService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
