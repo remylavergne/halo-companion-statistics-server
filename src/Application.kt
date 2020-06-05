@@ -9,6 +9,10 @@ import dev.remylavergne.halo.services.StatsHalo5ServiceImpl
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
+import io.ktor.auth.Authentication
+import io.ktor.auth.UserIdPrincipal
+import io.ktor.auth.authenticate
+import io.ktor.auth.basic
 import io.ktor.features.CallLogging
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.DefaultHeaders
@@ -49,6 +53,19 @@ fun installPlugins(application: Application) {
         }
     }
     application.install(DefaultHeaders)
+    application.install(Authentication) {
+        basic(name = "myauth1") {
+            realm = "Api Stats"
+            validate { credentials ->
+                println(credentials)
+                if (credentials.name == credentials.password) {
+                    UserIdPrincipal(credentials.name)
+                } else {
+                    null
+                }
+            }
+        }
+    }
 }
 
 fun Routing.root() {
@@ -87,24 +104,26 @@ fun Routing.player() {
 }
 
 fun Routing.admin() {
-    get("/generate-api-key/{client}") {
-        val client = call.parameters["client"]?.toLowerCase()
+    authenticate("myauth1") {
+        get("/generate-api-key/{client}") {
+            val client = call.parameters["client"]?.toLowerCase()
 
-        if (client == null) {
-            call.respond(HttpStatusCode.NotFound, "Unknown client")
-        }
-
-        client?.let { c: String ->
-            val isFound: Boolean = Client.values().any { it.value == c }
-
-            if (isFound) {
-                val apiKey: ApiKey = ApiKeyHelper.generate(c)
-                // Store Api Key
-
-                // Send it
-                call.respondText(apiKey.key)
-            } else {
+            if (client == null) {
                 call.respond(HttpStatusCode.NotFound, "Unknown client")
+            }
+
+            client?.let { c: String ->
+                val isFound: Boolean = Client.values().any { it.value == c }
+
+                if (isFound) {
+                    val apiKey: ApiKey = ApiKeyHelper.generate(c)
+                    // Store Api Key
+
+                    // Send it
+                    call.respondText(apiKey.key)
+                } else {
+                    call.respond(HttpStatusCode.NotFound, "Unknown client")
+                }
             }
         }
     }
