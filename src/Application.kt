@@ -37,7 +37,6 @@ fun Application.mainModule() {
         root()
         admin()
     }
-
 }
 
 fun installPlugins(application: Application) {
@@ -70,6 +69,9 @@ fun installPlugins(application: Application) {
     }
 }
 
+/**
+ * Cette route permet pour le moment de tester les implémentations. Avant l'implémentation de la couche business.
+ */
 fun Routing.root() {
     get("/") {
         // val result = MetadataServiceImpl(OkHttpHelper.client).getWeapons(Language.FRENCH)
