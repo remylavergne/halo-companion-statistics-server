@@ -54,11 +54,13 @@ fun installPlugins(application: Application) {
     }
     application.install(DefaultHeaders)
     application.install(Authentication) {
-        basic(name = "myauth1") {
+        basic(name = "admin") {
             realm = "Api Stats"
             validate { credentials ->
-                println(credentials)
-                if (credentials.name == credentials.password) {
+                if (credentials.name == application.environment.config.property("admin-authentication.username")
+                        .getString() && credentials.password == application.environment.config.property("admin-authentication.username")
+                        .getString()
+                ) {
                     UserIdPrincipal(credentials.name)
                 } else {
                     null
@@ -104,7 +106,7 @@ fun Routing.player() {
 }
 
 fun Routing.admin() {
-    authenticate("myauth1") {
+    authenticate("admin") {
         get("/generate-api-key/{client}") {
             val client = call.parameters["client"]?.toLowerCase()
 
