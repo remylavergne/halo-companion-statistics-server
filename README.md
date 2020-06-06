@@ -1,4 +1,8 @@
-# Halo 5 Middelware API
+# Halo 5 Middleware API
+
+- Framework : Ktor 
+- IDE : Intellij + Ktor & Kotlin plugins
+- Advanced Rest Client : https://install.advancedrestclient.com/install 
 
 ## But
 
