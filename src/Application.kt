@@ -1,9 +1,6 @@
 package dev.remylavergne.halo
 
-import dev.remylavergne.halo.helpers.ApiKey
-import dev.remylavergne.halo.helpers.ApiKeyHelper
-import dev.remylavergne.halo.helpers.Client
-import dev.remylavergne.halo.helpers.OkHttpHelper
+import dev.remylavergne.halo.helpers.*
 import dev.remylavergne.halo.repository.DatabaseHelper
 import dev.remylavergne.halo.services.StatsHalo5ServiceImpl
 import io.ktor.application.Application
@@ -26,6 +23,7 @@ import io.ktor.routing.get
 import io.ktor.routing.routing
 import io.ktor.util.KtorExperimentalAPI
 
+
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 @KtorExperimentalAPI
@@ -33,6 +31,7 @@ fun Application.mainModule() {
     installPlugins(this)
     DatabaseHelper(this).initialize()
     OkHttpHelper.init(this)
+    LocalStorageHelper.initLogsFile()
     routing {
         root()
         admin()

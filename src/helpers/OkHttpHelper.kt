@@ -1,5 +1,6 @@
 package dev.remylavergne.halo.helpers
 
+import dev.remylavergne.halo.services.ServiceHttpErrorsInterceptor
 import io.ktor.application.Application
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -27,6 +28,7 @@ object OkHttpHelper {
                 return chain.proceed(request)
             }
         })
+        .addInterceptor(ServiceHttpErrorsInterceptor())
         .build()
 
     fun init(application: Application) {

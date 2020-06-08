@@ -1,6 +1,5 @@
 package dev.remylavergne.halo.services
 
-import dev.remylavergne.halo.data.dto.metadata.MapVariants
 import dev.remylavergne.halo.data.dto.metadata.*
 import dev.remylavergne.halo.data.enums.Language
 import dev.remylavergne.halo.helpers.MoshiHelper
