@@ -1,9 +1,9 @@
 package dev.remylavergne.halo.services.interfaces
 
-import dev.remylavergne.halo.data.dto.halo5.generics.CommendationsDto
 import dev.remylavergne.halo.data.dto.halo5.CompanyDto
 import dev.remylavergne.halo.data.dto.halo5.arena.MatchResultArenaDto
 import dev.remylavergne.halo.data.dto.halo5.campaignmatch.CampaignMatchResultDto
+import dev.remylavergne.halo.data.dto.halo5.generics.CommendationsDto
 import dev.remylavergne.halo.data.dto.halo5.matchs.custom.CustomMatchResultDto
 import dev.remylavergne.halo.data.dto.halo5.matchs.history.PlayerMatchHistoryDto
 import dev.remylavergne.halo.data.dto.halo5.matchs.warzone.WarzoneMatchResultDto
