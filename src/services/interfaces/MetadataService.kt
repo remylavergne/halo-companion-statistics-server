@@ -76,4 +76,6 @@ interface MetadataService {
     /** A listing of weapons supported in the title. There is no significance to the ordering. */
     suspend fun getWeapons(language: Language): List<WeaponDto>
 
+    suspend fun retrieveEveryMetadata(get: suspend MetadataService.() -> Unit)
+
 }
