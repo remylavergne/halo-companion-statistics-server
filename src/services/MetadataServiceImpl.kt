@@ -10,7 +10,6 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 
-// TODO => Save all these informations into our database
 class MetadataServiceImpl(private val okHttpClient: OkHttpClient) : MetadataService {
 
     override suspend fun getCampaignMissions(language: Language): List<CampaignMissionsDto> {
@@ -158,5 +157,11 @@ class MetadataServiceImpl(private val okHttpClient: OkHttpClient) : MetadataServ
             println(error)
             emptyList<T>()
         } ?: emptyList<T>()
+    }
+
+    override suspend fun retrieveEveryMetadata(get: suspend MetadataService.() -> Unit) {
+        return withContext(Dispatchers.IO) {
+            get()
+        }
     }
 }

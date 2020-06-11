@@ -8,13 +8,13 @@ import io.ktor.util.KtorExperimentalAPI
 import org.litote.kmongo.KMongo
 
 @KtorExperimentalAPI
-class DatabaseHelper(private val application: Application) {
+object DatabaseHelper {
 
-    private lateinit var client: MongoClient
-    private lateinit var database: MongoDatabase
+    lateinit var client: MongoClient
+    lateinit var database: MongoDatabase
 
     @Throws(Exception::class)
-    fun initialize(): DatabaseHelper {
+    fun initialize(application: Application): DatabaseHelper {
         val uri =
             MongoClientURI(
                 "mongodb://${application.environment.config.property("mongodb.username")
@@ -34,6 +34,12 @@ class DatabaseHelper(private val application: Application) {
         }
 
         return this
+    }
+
+    /** Créer une collection dans la base de données en instance */
+    fun createCollection(collection: Halo5Collections) {
+        database.createCollection(collection.value)
+        println("DEBUG => Collection ${collection.value} created into database ${database.name}")
     }
 
 }
