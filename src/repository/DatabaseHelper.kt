@@ -10,8 +10,8 @@ import org.litote.kmongo.KMongo
 @KtorExperimentalAPI
 object DatabaseHelper {
 
-    lateinit var client: MongoClient
-    lateinit var database: MongoDatabase
+    private lateinit var client: MongoClient
+    private lateinit var database: MongoDatabase
 
     @Throws(Exception::class)
     fun initialize(application: Application): DatabaseHelper {
@@ -27,8 +27,8 @@ object DatabaseHelper {
             )
 
         try {
-            client = KMongo.createClient(uri = uri)
-            database = client.getDatabase(application.environment.config.property("mongodb.name").getString())
+            this.client = KMongo.createClient(uri = uri)
+            this.database = this.client.getDatabase(application.environment.config.property("mongodb.name").getString())
         } catch (e: Exception) {
             throw e
         }
@@ -38,8 +38,21 @@ object DatabaseHelper {
 
     /** Créer une collection dans la base de données en instance */
     fun createCollection(collection: Halo5Collections) {
-        database.createCollection(collection.value)
-        println("DEBUG => Collection ${collection.value} created into database ${database.name}")
+        if (!this.isCollectionExists(collection)) {
+            this.database.createCollection(collection.value)
+            println("DEBUG => Collection ${collection.value} created into database ${database.name}")
+        }
+    }
+
+    /** Vérifie si une collection existe déjà */
+    private fun isCollectionExists(collection: Halo5Collections): Boolean {
+        return try {
+            this.database.getCollection(collection.value)
+            true
+        } catch (e: IllegalArgumentException) {
+            println("DEBUG => $e")
+            false
+        }
     }
 
 }
