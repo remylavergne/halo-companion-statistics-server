@@ -1,6 +1,6 @@
 package dev.remylavergne.halo.services.interfaces
 
-interface ResponseWrapper<T> {
+interface ResponseListWrapper<T> {
     val apiInformations: ApiHeaders
-    val data: T
+    val data: T?
 }

@@ -5,5 +5,5 @@ import dev.remylavergne.halo.services.interfaces.MetadataService
 
 interface MetadataRepository {
 
-    suspend fun persistAllMetadata(metadataService: MetadataService, language: Language)
+    suspend fun retrieveMetadata(metadataService: MetadataService, language: Language)
 }
