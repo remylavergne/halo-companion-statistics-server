@@ -54,3 +54,4 @@ gradle-app.setting
 **/build/
 
 # End of https://www.gitignore.io/api/gradle,kotlin
+logs/http-errors-logs.txt
